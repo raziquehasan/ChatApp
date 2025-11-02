@@ -26,7 +26,10 @@ const Login = () => {
             const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
             const login = await axios.post(`${apiUrl}/api/auth/login`, userInput);
             const data = login.data;
-            console.log('Login response:', data);
+            console.log('Full login response:', login);
+            console.log('Login response data:', data);
+            console.log('Data success:', data?.success);
+            console.log('Data keys:', Object.keys(data || {}));
             
             if (data.success === false) {
                 setLoading(false)
@@ -35,7 +38,7 @@ const Login = () => {
             }
             
             // Success case - store user data properly
-            if (data.success === true) {
+            if (data && (data.success === true || data._id)) {
                 console.log('Setting auth user:', data);
                 toast.success(data.message || 'Login successful!')
                 localStorage.setItem('chatapp', JSON.stringify(data));
@@ -47,6 +50,10 @@ const Login = () => {
                     console.log('Navigating to home...');
                     navigate('/', { replace: true });
                 }, 500);
+            } else {
+                console.log('Unexpected response structure:', data);
+                setLoading(false);
+                toast.error('Login response format error');
             }
         } catch (error) {
             setLoading(false)
