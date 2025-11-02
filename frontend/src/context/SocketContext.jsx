@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { useAuth } from './AuthContext';
+import { getSocketUrl } from '../utils/api';
 
 const SocketContext = createContext();
 
@@ -15,7 +16,7 @@ export const SocketContextProvider=({children})=>{
     useEffect(()=>{
         if(authUser){
             // console.log('Connecting socket for user:', authUser._id);
-            const socket = io(import.meta.env.VITE_SOCKET_URL || "https://chatapp-backend-obn4.onrender.com",{
+            const socket = io(getSocketUrl(),{
                 query:{
                     userId:authUser?._id,
                 }

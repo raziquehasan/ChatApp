@@ -48,7 +48,8 @@ const Profile = () => {
         formData.append('profilePhoto', file);
 
         try {
-            const response = await axios.post('/api/user/upload-profile-photo', formData, {
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+            const response = await axios.post(`${apiUrl}/api/user/upload-profile-photo`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -87,7 +88,8 @@ const Profile = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('/api/auth/logout');
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+            await axios.post(`${apiUrl}/api/auth/logout`);
             localStorage.removeItem('chatapp');
             setAuthUser(null);
             toast.success('Logged out successfully');

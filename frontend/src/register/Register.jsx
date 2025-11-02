@@ -30,7 +30,8 @@ console.log(inputData);
             return toast.error("Password Dosen't match")
         }
         try {
-            const register = await axios.post(`/api/auth/register`,inputData);
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+            const register = await axios.post(`${apiUrl}/api/auth/register`,inputData);
             const data = register.data;
             console.log('Register response:', data);
             

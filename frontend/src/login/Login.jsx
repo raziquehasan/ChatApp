@@ -23,7 +23,8 @@ const Login = () => {
         e.preventDefault();
         setLoading(true)
         try {
-            const login = await axios.post(`/api/auth/login`, userInput);
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+            const login = await axios.post(`${apiUrl}/api/auth/login`, userInput);
             const data = login.data;
             console.log('Login response:', data);
             
@@ -33,16 +34,20 @@ const Login = () => {
                 return;
             }
             
-            // Success case
-            toast.success(data.message || 'Login successful!')
-            localStorage.setItem('chatapp', JSON.stringify(data));
-            setAuthUser(data);
-            setLoading(false);
-            
-            // Force navigation after a small delay
-            setTimeout(() => {
-                navigate('/', { replace: true });
-            }, 100);
+            // Success case - store user data properly
+            if (data.success === true) {
+                console.log('Setting auth user:', data);
+                toast.success(data.message || 'Login successful!')
+                localStorage.setItem('chatapp', JSON.stringify(data));
+                setAuthUser(data);
+                setLoading(false);
+                
+                // Force navigation after a small delay
+                setTimeout(() => {
+                    console.log('Navigating to home...');
+                    navigate('/', { replace: true });
+                }, 500);
+            }
         } catch (error) {
             setLoading(false)
             console.log('Login error:', error);
@@ -71,6 +76,7 @@ const Login = () => {
                                 onChange={handelInput}
                                 placeholder='Enter your email'
                                 required
+                                autoComplete="username"
                                 className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200'
                             />
                         </div>

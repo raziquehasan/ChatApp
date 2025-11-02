@@ -38,7 +38,8 @@ const Sidebar = ({ onSelectUser }) => {
         const chatUserHandler = async () => {
             setLoading(true)
             try {
-                const chatters = await axios.get(`/api/user/currentchatters`)
+                const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+                const chatters = await axios.get(`${apiUrl}/api/user/currentchatters`)
                 const data = chatters.data;
                 if (data.success === false) {
                     setLoading(false)
@@ -60,7 +61,8 @@ const Sidebar = ({ onSelectUser }) => {
         e.preventDefault();
         setLoading(true)
         try {
-            const search = await axios.get(`/api/user/search?search=${searchInput}`);
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+            const search = await axios.get(`${apiUrl}/api/user/search?search=${searchInput}`);
             const data = search.data;
             if (data.success === false) {
                 setLoading(false)
@@ -99,7 +101,8 @@ const Sidebar = ({ onSelectUser }) => {
         if (confirmlogout === authUser.username) {
             setLoading(true)
             try {
-                const logout = await axios.post('/api/auth/logout')
+                const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+                const logout = await axios.post(`${apiUrl}/api/auth/logout`)
                 const data = logout.data;
                 if (data?.success === false) {
                     setLoading(false)

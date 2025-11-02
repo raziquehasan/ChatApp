@@ -43,7 +43,8 @@ const MessageContainer = ({ onBackUser }) => {
         const getMessages = async () => {
             setLoading(true);
             try {
-                const get = await axios.get(`/api/message/${selectedConversation?._id}`);
+                const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+                const get = await axios.get(`${apiUrl}/api/message/${selectedConversation?._id}`);
                 const data = await get.data;
                 if (data.success === false) {
                     setLoading(false);
@@ -69,7 +70,8 @@ const MessageContainer = ({ onBackUser }) => {
         e.preventDefault();
         setSending(true);
         try {
-            const res =await axios.post(`/api/message/send/${selectedConversation?._id}`,{messages:sendData});
+            const apiUrl = import.meta.env.VITE_API_URL || 'https://chatapp-backend-obn4.onrender.com';
+            const res =await axios.post(`${apiUrl}/api/message/send/${selectedConversation?._id}`,{messages:sendData});
             const data = await res.data;
             if (data.success === false) {
                 setSending(false);
