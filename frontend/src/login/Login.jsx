@@ -38,7 +38,11 @@ const Login = () => {
             localStorage.setItem('chatapp', JSON.stringify(data));
             setAuthUser(data);
             setLoading(false);
-            navigate('/');
+            
+            // Force navigation after a small delay
+            setTimeout(() => {
+                navigate('/', { replace: true });
+            }, 100);
         } catch (error) {
             setLoading(false)
             console.log('Login error:', error);
