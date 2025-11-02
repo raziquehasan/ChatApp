@@ -235,14 +235,50 @@ Complete profile editing with photo upload
 
 ## 🚀 Deployment
 
-### **Frontend (Netlify/Vercel)**
+### **Render Deployment (Recommended)**
+
+This project is configured for easy deployment on Render using the included `render.yaml` file.
+
+#### **One-Click Deploy**
+1. Fork this repository
+2. Connect your GitHub account to Render
+3. Create a new "Blueprint" on Render
+4. Select this repository
+5. Render will automatically deploy both frontend and backend
+
+#### **Manual Deployment Steps**
+
+**1. Backend Deployment:**
+- Create a new Web Service on Render
+- Connect your GitHub repository
+- Set build command: `npm install`
+- Set start command: `npm start`
+- Add environment variables:
+  - `NODE_ENV=production`
+  - `MONGODB_URI=your_mongodb_connection_string`
+  - `JWT_SECRET=your_jwt_secret`
+
+**2. Frontend Deployment:**
+- Create a new Static Site on Render
+- Set build command: `npm run build --prefix frontend`
+- Set publish directory: `frontend/dist`
+- Add environment variable:
+  - `VITE_SOCKET_URL=https://your-backend-url.onrender.com`
+
+**3. Database Setup:**
+- Use Render's managed PostgreSQL or
+- Connect to MongoDB Atlas (recommended)
+
+### **Other Platforms**
+
+#### **Frontend (Netlify/Vercel)**
 ```bash
 cd frontend
 npm run build
 # Deploy dist/ folder
 ```
 
-### **Backend (Heroku/Railway)**
+#### **Backend (Railway/Heroku)**
 ```bash
 # Set environment variables
 # Deploy backend folder

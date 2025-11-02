@@ -1,0 +1,42 @@
+services:
+  # Backend API Service
+  - type: web
+    name: chatapp-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: chatapp-mongodb
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+    autoDeploy: true
+
+  # Frontend Static Site
+  - type: static
+    name: chatapp-frontend
+    runtime: static
+    buildCommand: npm run build --prefix frontend
+    staticPublishPath: ./frontend/dist
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: VITE_API_URL
+        value: https://chatapp-backend.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+# Database
+databases:
+  - name: chatapp-mongodb
+    databaseName: chatapp
+    user: chatapp-user
