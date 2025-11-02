@@ -29,8 +29,13 @@ app.use((req, res, next) => {
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     } else {
-        // Fallback for production
+        // Always allow the frontend domain for production
         res.setHeader('Access-Control-Allow-Origin', 'https://chatapp-frontend-s5sc.onrender.com');
+    }
+    
+    // Also set for undefined origins (direct API calls)
+    if (!origin) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
     }
     
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
