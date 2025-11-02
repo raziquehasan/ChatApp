@@ -16,17 +16,25 @@ dotenv.config();
 
 // CORS middleware for API calls
 app.use((req, res, next) => {
-    const allowedOrigins = process.env.NODE_ENV === 'production' 
-        ? ['https://chatapp-frontend-s5sc.onrender.com']
-        : ['http://localhost:5173', 'http://localhost:5174'];
+    const allowedOrigins = [
+        'https://chatapp-frontend-s5sc.onrender.com',
+        'http://localhost:5173', 
+        'http://localhost:5174'
+    ];
     
     const origin = req.headers.origin;
+    console.log('Request origin:', origin);
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+    
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+        // Fallback for production
+        res.setHeader('Access-Control-Allow-Origin', 'https://chatapp-frontend-s5sc.onrender.com');
     }
     
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Cookie');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     
     if (req.method === 'OPTIONS') {
