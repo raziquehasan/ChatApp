@@ -8,7 +8,7 @@ const server = http.createServer(app);
 const io = new Server(server,{
     cors:{
         origin: process.env.NODE_ENV === 'production' 
-            ? ['https://chatapp-frontend.onrender.com'] 
+            ? ['https://chatapp-frontend-s5sc.onrender.com'] 
             : ['http://localhost:5173', 'http://localhost:5174'],
         methods:["GET","POST"],
         credentials: true

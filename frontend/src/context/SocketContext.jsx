@@ -15,7 +15,7 @@ export const SocketContextProvider=({children})=>{
     useEffect(()=>{
         if(authUser){
             // console.log('Connecting socket for user:', authUser._id);
-            const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:3000",{
+            const socket = io(import.meta.env.VITE_SOCKET_URL || "https://chatapp-backend-obn4.onrender.com",{
                 query:{
                     userId:authUser?._id,
                 }
