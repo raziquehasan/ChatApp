@@ -6,37 +6,27 @@ services:
     plan: free
     buildCommand: npm install
     startCommand: npm start
-    healthCheckPath: /
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
       - key: MONGODB_URI
-        fromDatabase:
-          name: chatapp-mongodb
-          property: connectionString
+        value: mongodb+srv://chatapp:whataspp@chat.ho7liks.mongodb.net/chatapp?retryWrites=true&w=majority
       - key: JWT_SECRET
-        generateValue: true
+        value: chatapp_super_secret_production_key
     autoDeploy: true
 
   # Frontend Static Site
   - type: static
     name: chatapp-frontend
-    runtime: static
     buildCommand: npm run build --prefix frontend
     staticPublishPath: ./frontend/dist
     pullRequestPreviewsEnabled: true
     envVars:
-      - key: VITE_API_URL
+      - key: VITE_SOCKET_URL
         value: https://chatapp-backend.onrender.com
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
-
-# Database
-databases:
-  - name: chatapp-mongodb
-    databaseName: chatapp
-    user: chatapp-user
