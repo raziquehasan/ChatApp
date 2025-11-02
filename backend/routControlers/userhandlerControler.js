@@ -4,7 +4,7 @@ import User from "../Models/userModels.js";
 export const getUserBySearch=async(req,res)=>{
 try {
     const search = req.query.search || '';
-    const currentUserID = req.user._conditions._id;
+    const currentUserID = req.user.userId || req.user._id;
     const user = await User.find({
         $and:[
             {
@@ -21,18 +21,18 @@ try {
     res.status(200).send(user)
 
 } catch (error) {
+    console.log('User search error:', error);
     res.status(500).send({
         success: false,
-        message: error
+        message: error.message || 'Search failed'
     })
-    console.log(error);
 }
 }
 
 
 export const getCorrentChatters=async(req,res)=>{
     try {
-        const currentUserID = req.user._conditions._id;
+        const currentUserID = req.user.userId || req.user._id;
         const currenTChatters = await Conversation.find({
             participants:currentUserID
         }).sort({
@@ -55,10 +55,10 @@ export const getCorrentChatters=async(req,res)=>{
             res.status(200).send(users)
 
     } catch (error) {
+        console.log('Current chatters error:', error);
         res.status(500).send({
             success: false,
-            message: error
+            message: error.message || 'Failed to load chatters'
         })
-        console.log(error);
     }
 }
