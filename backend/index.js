@@ -17,15 +17,33 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser())
 
+// API Routes
 app.use('/api/auth',authRouter)
 app.use('/api/message',messageRouter)
 app.use('/api/user',userRouter)
 
-app.use(express.static(path.join(__dirname,"/frontend/dist")))
+// Health check endpoint
+app.get('/', (req, res) => {
+    res.json({
+        message: "ChatApp Backend API is running! 🚀",
+        status: "success",
+        endpoints: {
+            auth: "/api/auth",
+            messages: "/api/message", 
+            users: "/api/user"
+        },
+        timestamp: new Date().toISOString()
+    });
+});
 
-app.use((req,res)=>{
-    res.sendFile(path.join(__dirname,"frontend","dist","index.html"))
-})
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "/frontend/dist")));
+    
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+    });
+}
 
 const PORT = process.env.PORT || 3000
 
