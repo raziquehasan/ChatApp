@@ -69,11 +69,11 @@ export const userLogin = async (req, res) => {
         })
 
     } catch (error) {
+        console.log('Login error:', error);
         res.status(500).send({
             success: false,
-            message: error
+            message: error.message || 'Internal server error'
         })
-        console.log(error);
     }
 }
 
