@@ -36,14 +36,8 @@ app.get('/', (req, res) => {
     });
 });
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, "/frontend/dist")));
-    
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-    });
-}
+// API-only backend - no static file serving needed
+// Frontend will be deployed separately as static site
 
 const PORT = process.env.PORT || 3000
 
