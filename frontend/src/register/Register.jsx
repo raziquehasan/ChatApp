@@ -111,9 +111,10 @@ console.log(inputData);
                             </label>
                             <input
                                 id='password'
-                                type='password'
+                                type="password"
                                 onChange={handelInput}
-                                placeholder='Enter password'
+                                placeholder="Enter your password"
+                                autoComplete="new-password"
                                 required
                                 className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200'
                             />

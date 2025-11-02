@@ -71,12 +71,13 @@ const Login = () => {
                                 Password
                             </label>
                             <input
-                                id='password'
-                                type='password'
+                                id="password"
+                                type="password"
                                 onChange={handelInput}
-                                placeholder='Enter your password'
+                                placeholder="Enter your password"
                                 required
-                                className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200'
+                                autoComplete="current-password"
+                                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                             />
                         </div>
                         
