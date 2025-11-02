@@ -32,16 +32,20 @@ console.log(inputData);
         try {
             const register = await axios.post(`/api/auth/register`,inputData);
             const data = register.data;
+            console.log('Register response:', data);
+            
             if(data.success === false){
                 setLoading(false)
                 toast.error(data.message)
-                console.log(data.message);
+                return;
             }
-            toast.success(data?.message)
+            
+            // Success case
+            toast.success(data?.message || 'Registration successful!')
             localStorage.setItem('chatapp',JSON.stringify(data))
             setAuthUser(data)
             setLoading(false)
-            navigate('/login')
+            navigate('/')
         } catch (error) {
             setLoading(false)
             console.log(error);

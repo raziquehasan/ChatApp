@@ -25,19 +25,24 @@ const Login = () => {
         try {
             const login = await axios.post(`/api/auth/login`, userInput);
             const data = login.data;
+            console.log('Login response:', data);
+            
             if (data.success === false) {
                 setLoading(false)
-                console.log(data.message);
+                toast.error(data.message);
+                return;
             }
-            toast.success(data.message)
-            localStorage.setItem('chatapp',JSON.stringify(data));
-            setAuthUser(data)
-            setLoading(false)
-            navigate('/')
+            
+            // Success case
+            toast.success(data.message || 'Login successful!')
+            localStorage.setItem('chatapp', JSON.stringify(data));
+            setAuthUser(data);
+            setLoading(false);
+            navigate('/');
         } catch (error) {
             setLoading(false)
-            console.log(error);
-            toast.error(error?.response?.data?.message)
+            console.log('Login error:', error);
+            toast.error(error?.response?.data?.message || 'Login failed!')
         }
     }
     return (

@@ -29,11 +29,14 @@ export const userRegister = async (req, res) => {
         }
 
         res.status(201).send({
+            success: true,
             _id: newUser._id,
             fullname: newUser.fullname,
             username: newUser.username,
             profilepic: newUser.profilepic,
             email: newUser.email,
+            gender: newUser.gender,
+            message: "Registration Successful"
         })
     } catch (error) {
         res.status(500).send({
@@ -55,12 +58,14 @@ export const userLogin = async (req, res) => {
         jwtToken(user._id, res);
 
         res.status(200).send({
+            success: true,
             _id: user._id,
             fullname: user.fullname,
             username: user.username,
             profilepic: user.profilepic,
-            email:user.email,
-            message: "Succesfully LogIn"
+            email: user.email,
+            gender: user.gender,
+            message: "Successfully LogIn"
         })
 
     } catch (error) {
