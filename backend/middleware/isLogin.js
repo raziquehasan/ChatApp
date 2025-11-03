@@ -15,7 +15,7 @@ const isLogin = async (req, res, next) => {
         console.log(`error in isLogin middleware ${error.message}`);
         res.status(500).send({
             success: false,
-            message: error
+            message: error.message || 'Authentication failed'
         })
     }
 }
