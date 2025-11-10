@@ -3,12 +3,21 @@ import User from "../Models/userModels.js";
 
 export const getUserBySearch=async(req,res)=>{
 try {
-    const search = req.query.search || '';
-    
+    console.log('=== SEARCH FUNCTION START ===');
     console.log('Search request - req.user:', req.user);
     console.log('Search request - req.user.userId:', req.user?.userId);
     console.log('Search request - req.user._id:', req.user?._id);
     
+    // Simple test - just return a success message first
+    return res.status(200).send({
+        success: true,
+        message: 'Search endpoint reached successfully',
+        user: req.user,
+        timestamp: new Date().toISOString()
+    });
+    
+    /*
+    const search = req.query.search || '';
     const currentUserID = req.user.userId || req.user._id;
     
     console.log('Search request:', { search, currentUserID, user: req.user });
@@ -36,6 +45,7 @@ try {
 
     console.log('Search results:', user);
     res.status(200).send(user)
+    */
 
 } catch (error) {
     console.log('User search error:', error);
@@ -49,7 +59,18 @@ try {
 
 export const getCorrentChatters=async(req,res)=>{
     try {
+        console.log('=== CURRENT CHATTERS FUNCTION START ===');
         console.log('CurrentChatters request - req.user:', req.user);
+        
+        // Simple test - just return a success message first
+        return res.status(200).send({
+            success: true,
+            message: 'CurrentChatters endpoint reached successfully',
+            user: req.user,
+            timestamp: new Date().toISOString()
+        });
+        
+        /*
         const currentUserID = req.user.userId || req.user._id;
         console.log('CurrentChatters - currentUserID:', currentUserID);
         
@@ -80,6 +101,7 @@ export const getCorrentChatters=async(req,res)=>{
             const users = otherParticipentsIDS.map(id => user.find(user => user._id.toString() === id.toString()));
 
             res.status(200).send(users)
+        */
 
     } catch (error) {
         console.log('Current chatters error:', error);
