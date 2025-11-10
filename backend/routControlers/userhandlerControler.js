@@ -7,12 +7,14 @@ try {
     console.log('Search request - req.user:', req.user);
     console.log('Search request - req.user.userId:', req.user?.userId);
     console.log('Search request - req.user._id:', req.user?._id);
+    console.log('Search request - cookies:', req.cookies);
     
     // Simple test - just return a success message first
     return res.status(200).send({
         success: true,
-        message: 'Search endpoint reached successfully',
-        user: req.user,
+        message: 'Search endpoint reached successfully (no auth)',
+        user: req.user || 'No user (auth bypassed)',
+        cookies: req.cookies,
         timestamp: new Date().toISOString()
     });
     
