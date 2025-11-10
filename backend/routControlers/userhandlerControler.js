@@ -4,9 +4,23 @@ import User from "../Models/userModels.js";
 export const getUserBySearch=async(req,res)=>{
 try {
     const search = req.query.search || '';
+    
+    console.log('Search request - req.user:', req.user);
+    console.log('Search request - req.user.userId:', req.user?.userId);
+    console.log('Search request - req.user._id:', req.user?._id);
+    
     const currentUserID = req.user.userId || req.user._id;
     
     console.log('Search request:', { search, currentUserID, user: req.user });
+    
+    if (!currentUserID) {
+        console.log('No currentUserID found, req.user:', req.user);
+        return res.status(500).send({
+            success: false,
+            message: 'User ID not found in request'
+        });
+    }
+    
     const user = await User.find({
         $and:[
             {
@@ -35,7 +49,17 @@ try {
 
 export const getCorrentChatters=async(req,res)=>{
     try {
+        console.log('CurrentChatters request - req.user:', req.user);
         const currentUserID = req.user.userId || req.user._id;
+        console.log('CurrentChatters - currentUserID:', currentUserID);
+        
+        if (!currentUserID) {
+            console.log('No currentUserID found in currentchatters, req.user:', req.user);
+            return res.status(500).send({
+                success: false,
+                message: 'User ID not found in request'
+            });
+        }
         const currenTChatters = await Conversation.find({
             participants:currentUserID
         }).sort({
