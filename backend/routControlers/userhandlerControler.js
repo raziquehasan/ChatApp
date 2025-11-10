@@ -18,7 +18,7 @@ try {
                 _id:{$ne:currentUserID}
             }
         ]
-    }).select("-password email")
+    }).select("-password -email")
 
     console.log('Search results:', user);
     res.status(200).send(user)
