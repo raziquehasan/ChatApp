@@ -5,6 +5,8 @@ export const getUserBySearch=async(req,res)=>{
 try {
     const search = req.query.search || '';
     const currentUserID = req.user.userId || req.user._id;
+    
+    console.log('Search request:', { search, currentUserID, user: req.user });
     const user = await User.find({
         $and:[
             {
@@ -16,8 +18,9 @@ try {
                 _id:{$ne:currentUserID}
             }
         ]
-    }).select("-password").select("email")
+    }).select("-password email")
 
+    console.log('Search results:', user);
     res.status(200).send(user)
 
 } catch (error) {
@@ -48,7 +51,7 @@ export const getCorrentChatters=async(req,res)=>{
 
             const otherParticipentsIDS = partcipantsIDS.filter(id => id.toString() !== currentUserID.toString());
 
-            const user = await User.find({_id:{$in:otherParticipentsIDS}}).select("-password").select("-email");
+            const user = await User.find({_id:{$in:otherParticipentsIDS}}).select("-password -email");
 
             const users = otherParticipentsIDS.map(id => user.find(user => user._id.toString() === id.toString()));
 
